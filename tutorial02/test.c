@@ -50,7 +50,8 @@ static void test_parse_false() {
         EXPECT_EQ_DOUBLE(expect, lept_get_number(&v));\
     } while(0)
 
-static void test_parse_number() {
+static void test_parse_number() 
+{
     TEST_NUMBER(0.0, "0");
     TEST_NUMBER(0.0, "-0");
     TEST_NUMBER(0.0, "-0.0");
@@ -121,11 +122,11 @@ static void test_parse_number_too_big() {
 }
 
 static void test_parse() {
-    //test_parse_null();
-    //test_parse_true();
-    //test_parse_false();
-    //test_parse_number();
-    //test_parse_expect_value();
+    test_parse_null();
+    test_parse_true();
+    test_parse_false();
+    test_parse_number();
+    test_parse_expect_value();
     test_parse_invalid_value();
     test_parse_root_not_singular();
     //test_parse_number_too_big();
