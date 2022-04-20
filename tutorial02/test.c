@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "leptjson.h"
+#include <errno.h>
 
 static int main_ret = 0;
 static int test_count = 0;
@@ -115,7 +116,7 @@ static void test_parse_root_not_singular() {
 }
 
 static void test_parse_number_too_big() {
-#if 0
+#if 1
     TEST_ERROR(LEPT_PARSE_NUMBER_TOO_BIG, "1e309");
     TEST_ERROR(LEPT_PARSE_NUMBER_TOO_BIG, "-1e309");
 #endif
@@ -129,7 +130,7 @@ static void test_parse() {
     test_parse_expect_value();
     test_parse_invalid_value();
     test_parse_root_not_singular();
-    //test_parse_number_too_big();
+    test_parse_number_too_big();
 }
 
 int main() {

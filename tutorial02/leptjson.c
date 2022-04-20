@@ -2,6 +2,8 @@
 #include <assert.h>  /* assert() */
 #include <stdlib.h>  /* NULL, strtod() */
 #include <stdbool.h>
+#include <errno.h>
+#include <math.h>
 
 #define EXPECT(c, ch)       do { assert(*c->json == (ch)); c->json++; } while(0)
 
@@ -109,8 +111,14 @@ static int lept_parse_number(lept_context* c, lept_value* v)
 		return LEPT_PARSE_INVALID_VALUE;
 	}
 
+	errno = 0;
 	//字符串转换为double，返回第一个无法转换的值的指针。
 	v->n = strtod(c->json, NULL);
+	//过滤较小值
+	if (errno == ERANGE && (v->n == HUGE_VAL || v->n == -HUGE_VAL))
+	{
+		return LEPT_PARSE_NUMBER_TOO_BIG;
+	}
 	c->json = p;
 	v->type = LEPT_NUMBER;
 	return LEPT_PARSE_OK;
